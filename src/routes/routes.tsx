@@ -3,7 +3,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../pages/Home';
 import Details from '../pages/Details';
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  Details: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
+
 const Routes = () => {
   return (
     <Stack.Navigator screenOptions={{headerBackTitleVisible: false}}>

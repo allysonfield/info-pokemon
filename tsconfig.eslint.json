@@ -1,0 +1,24 @@
+{
+  // extend your base config so you don't have to redefine your compilerOptions
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "strict": true },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "typings/**/*.ts",
+    // etc
+
+    // if you have a mixed JS/TS codebase, don't forget to include your JS files
+    "src/**/*.js",
+    "babel.config.js"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"], // Your TypeScript files extension
+      "parserOptions": {
+        "project": ["./tsconfig.json"], // Specify it only for TypeScript files
+      },
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+}
