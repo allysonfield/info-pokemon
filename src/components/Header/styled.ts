@@ -13,4 +13,5 @@ export const Title = styled.Text<TitleProps>`
   color: ${({color}) => color};
   font-size: 30px;
   font-family: ${({theme}) => theme.fonts.MEDIUM};
+  margin-top: 10px;
 `;

@@ -41,6 +41,7 @@
       "react-hooks/exhaustive-deps": "off",
       "no-useless-computed-key": "off",
       "object-shorthand": "off",
+      "default-param-last": "off",
       "react/state-in-constructor": "off",
       "react/sort-comp": "off",
       "class-methods-use-this": "off",

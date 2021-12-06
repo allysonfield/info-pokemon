@@ -1,20 +1,21 @@
 import produce from 'immer';
+import {PokemonProps} from '~/@types/interfaces';
 
-type PayloadProps = {
-  data: any[];
+type State = {
+  pokemons: PokemonProps[];
+  loading: boolean;
 };
-interface ActionProps {
-  type: string;
-  payload: any[];
-}
 
 const INITIAL_STATE = {
   pokemons: [],
   loading: false,
-};
+} as State;
 
-function baseReducer(initialState, methods) {
-  return (state = initialState, action) => {
+function baseReducer(initialState: State, methods: any) {
+  return (
+    state: State = initialState,
+    action: {type: string; error: boolean},
+  ) => {
     const method = methods[action.type];
 
     if (!method || action.error) {
@@ -26,19 +27,19 @@ function baseReducer(initialState, methods) {
 }
 
 const pokemonReducer = baseReducer(INITIAL_STATE, {
-  ['@pokemon/CALL_LOAD'](state, {payload}) {
+  ['@pokemon/CALL_LOAD'](state: State) {
     return produce(state, (draft: any) => {
       draft.loading = true;
     });
   },
-  ['@pokemon/GET_POKEMON_LIST_FINISH'](state, {payload}) {
-    return produce(state, (draft: any) => {
+  ['@pokemon/GET_POKEMON_LIST_FINISH'](state: State, {payload}: any) {
+    return produce(state, (draft: State) => {
       draft.pokemons = payload;
       draft.loading = false;
     });
   },
 
-  ['@pokemon/GET_POKEMON_LIST_LOAD_MORE_FINISH'](state, {payload}) {
+  ['@pokemon/GET_POKEMON_LIST_LOAD_MORE_FINISH'](state: State, {payload}: any) {
     return produce(state, (draft: any) => {
       const newty = state.pokemons.concat(payload);
       const merge = newty.filter(

@@ -2,24 +2,29 @@ import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTheme} from 'styled-components';
+import {PokemonReducerProps} from '~/@types/interfaces';
 import {
   pokemonListAction,
   pokemonListLoadMoreAction,
 } from '~/store/modules/pokemon/action';
 import Card from '../Card';
 
-import {Container, List} from './styled';
+import {Container} from './styled';
 
 const PokeList = () => {
   const dispatch = useDispatch();
-  const {pokemons, loading} = useSelector(state => state.pokemon);
+  const {pokemons, loading} = useSelector(
+    (state: PokemonReducerProps) => state.pokemon,
+  );
   const [offset, setOffset] = useState(0);
   const {colors} = useTheme();
 
   async function loadMore() {
-    const page = offset + 1;
-    dispatch(pokemonListLoadMoreAction({limit: 10, offset: page}));
-    setOffset(page);
+    if (!loading) {
+      const page = offset + 1;
+      dispatch(pokemonListLoadMoreAction({limit: 10, offset: page}));
+      setOffset(page);
+    }
   }
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const PokeList = () => {
         renderItem={({item}) => <Card name={item.name} url={item.url} />}
         onEndReached={loadMore}
         onEndReachedThreshold={0.05}
-        ListFooterComponent={() =>
+        ListFooterComponent={
           loading && <ActivityIndicator color={colors.GREEN} size="large" />
         }
       />
