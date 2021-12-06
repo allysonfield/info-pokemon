@@ -2,9 +2,14 @@ import React from 'react';
 import './config/ReactotronConfig';
 import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Provider} from 'react-redux';
+import {ThemeProvider} from 'styled-components/native';
 import Routes from './routes/routes';
 import {store} from './store';
+import theme from './styles/theme';
+
+Icon.loadFont();
 
 const App = () => {
   return (
@@ -16,7 +21,9 @@ const App = () => {
       />
       <NavigationContainer>
         <Provider store={store}>
-          <Routes />
+          <ThemeProvider theme={theme}>
+            <Routes />
+          </ThemeProvider>
         </Provider>
       </NavigationContainer>
     </>
