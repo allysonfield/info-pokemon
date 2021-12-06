@@ -1,7 +1,26 @@
 import produce from 'immer';
 
-const INITIAL_STATE = {};
+type PayloadProps = {
+  data: any[];
+};
+interface ActionProps {
+  type: string;
+  payload: any[];
+}
 
-export default function pokemon(state = INITIAL_STATE, action) {
-  return produce(state, draft => {});
+const INITIAL_STATE = {
+  pokemons: [],
+};
+
+export default function pokemon(state = INITIAL_STATE, action: ActionProps) {
+  return produce(state, draft => {
+    switch (action.type) {
+      case '@pokemon/GET_POKEMON_LIST_FINISH':
+        draft.pokemons = action.payload;
+        break;
+
+      default:
+        return state;
+    }
+  });
 }
