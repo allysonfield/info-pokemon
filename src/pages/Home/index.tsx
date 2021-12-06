@@ -14,19 +14,14 @@ import PokeList from '~/components/PokeList';
 type HomeScreenProp = StackNavigationProp<RootStackParamList>;
 
 const Home = () => {
-  const dispatch = useDispatch();
   const {navigate} = useNavigation<HomeScreenProp>();
   const {colors} = useTheme();
-  const {pokemons} = useSelector(state => state.pokemon);
 
-  useEffect(() => {
-    dispatch(pokemonListAction({limit: 10, offset: 0}));
-  }, [dispatch]);
   return (
     <Container>
       <Header iconColor={colors.BLACK} title="Pokedex" />
 
-      <PokeList data={pokemons} />
+      <PokeList />
     </Container>
   );
 };

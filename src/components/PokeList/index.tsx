@@ -1,17 +1,42 @@
-import React from 'react';
-import {FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, FlatList} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTheme} from 'styled-components';
+import {
+  pokemonListAction,
+  pokemonListLoadMoreAction,
+} from '~/store/modules/pokemon/action';
 import Card from '../Card';
 
 import {Container, List} from './styled';
 
-const PokeList = ({data}) => {
+const PokeList = () => {
+  const dispatch = useDispatch();
+  const {pokemons, loading} = useSelector(state => state.pokemon);
+  const [offset, setOffset] = useState(0);
+  const {colors} = useTheme();
+
+  async function loadMore() {
+    const page = offset + 1;
+    dispatch(pokemonListLoadMoreAction({limit: 10, offset: page}));
+    setOffset(page);
+  }
+
+  useEffect(() => {
+    dispatch(pokemonListAction({limit: 10, offset: 0}));
+  }, [dispatch]);
   return (
     <Container>
       <FlatList
-        data={data}
+        data={pokemons}
         numColumns={2}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({item}) => <Card name={item.name} url={item.url} />}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.05}
+        ListFooterComponent={() =>
+          loading && <ActivityIndicator color={colors.GREEN} size="large" />
+        }
       />
     </Container>
   );

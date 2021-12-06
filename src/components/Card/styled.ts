@@ -18,3 +18,9 @@ export const Row = styled.View`
   height: 100%;
   align-items: center;
 `;
+
+export const Title = styled.Text`
+  font-size: 18px;
+  font-family: ${({theme}) => theme.fonts.BOLD};
+  color: ${({theme}) => theme.colors.BLACK};
+`;

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
 
-import {Container, Row} from './styled';
+import {Container, Row, Title} from './styled';
 
 const Card = ({name, url}) => {
   const [data, setData] = useState(null);
@@ -20,7 +20,7 @@ const Card = ({name, url}) => {
     <Container>
       <Row>
         <View>
-          <Text>{name}</Text>
+          <Title>{name}</Title>
         </View>
 
         {data && (
